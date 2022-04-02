@@ -1,3 +1,14 @@
 #canvas {
     border: 2px solid green;
 }
+body {
+    display: flex;
+}
+section {
+    border: 2px solid green;
+    margin-left: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
