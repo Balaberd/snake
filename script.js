@@ -18,7 +18,7 @@ let snake = {
    for(let i = 0; i < this.bodyPosition.length; i++) {
      context.fillStyle = "#13dc15";
      if(i == 0) context.fillStyle = 'green';
-     context.fillRect((this.bodyPosition[i][0]), (this.bodyPosition[i][1]), 16, 16);
+     context.fillRect((this.bodyPosition[i][0] + 1), (this.bodyPosition[i][1] + 1), 14, 14);
     };
   },
   //удалние змейки
@@ -39,6 +39,12 @@ let snake = {
       if((berry.berryPosition[0] == snake.bodyPosition[0][0]) && (berry.berryPosition[1] == snake.bodyPosition[0][1])) {
         refreshScore();
         berry.paintBerry();
+        if(score % 2 == 0) {
+          speed -= 15;
+          speedBox.innerHTML = speed;
+          pausePlay();
+          startPlay();
+        };
       }
     newHeadPosition = undefined;
   },
@@ -58,7 +64,7 @@ let snake = {
     snake.refreshSnakeBodyPosition();
     snake.check();
     snake.paintSnake();
-    console.log('голова ' + snake.bodyPosition[0] + " berry " + berry.berryPosition);
+    //console.log('голова ' + snake.bodyPosition[0] + " berry " + berry.berryPosition);
   },
 };
 
@@ -71,7 +77,7 @@ let berry = {
     berry.berryPosition.push(Math.floor(Math.random() * 18) * 16);  
     for(let i=0; i < berry.berryPosition.length; i++) {
       if((snake.bodyPosition[i][0] == berry.berryPosition[0]) && (snake.bodyPosition[i][1] == berry.berryPosition[1])) {
-        berryPosition.length = 0;
+        berry.berryPosition.length = 0;
         return berry.refreshBerryPosition();
       }
     };
@@ -111,7 +117,7 @@ function startPlay() {
     context.clearRect(0, 0, canvas.width, canvas.height);
     snake.paintSnake();
     berry.paintBerry();
-    console.log('НАЧАТЬ СНАЧАЛА!!!')
+    console.log('НАЧАТЬ СНАЧАЛА!!!');
   };
   play = setInterval(snake.animation, speed);
   superButton.removeEventListener('click', startPlay);
@@ -129,17 +135,21 @@ function pausePlay() {
 /* -------------------------------- ОЧКИ ------------------------------------------- */
 
 let scoreNow = document.querySelector('.score__now');
-scoreNow.innerHTML = 'Результат: ' + score;
+scoreNow.innerHTML = score;
 
 let scoreMax = document.querySelector('.score__max');
-scoreMax.innerHTML = 'Лучший результат: ' + maxScore;
+scoreMax.innerHTML = maxScore;
+
+let speedScore = document.querySelector('.speed');
 
 
 function refreshScore() {
   score++;
-  scoreNow.innerHTML = 'Результат: ' + score;
+  scoreNow.innerHTML = score;
 }
 
+let speedBox = document.querySelector('.speed');
+speedBox.innerHTML = speed;
 
 /*** -------------------------------- ПРОИГРЫШ ----------------------------------- */
 
@@ -151,10 +161,12 @@ function loseGame() {
   snake.bodyPosition = [[128,128],[128,144],[128,160]];
   currentDirection = topStep;
   if(score > maxScore) maxScore = score;  
-  scoreMax.innerHTML = 'Лучший результат: ' + maxScore;
+  scoreMax.innerHTML = maxScore;
+  
   score = 0;
-  scoreNow.innerHTML = 'Результат: ' + score;
-
+  scoreNow.innerHTML = score;
+  speed = 500;
+  speedScore.innerHTML = speed;
   
   context.fillStyle = "black";
   context.font = 'bold 35px sans-serif';
@@ -163,4 +175,4 @@ function loseGame() {
 
 }
 
-
+/* ------------------------------------- скорость --------------------------------- */

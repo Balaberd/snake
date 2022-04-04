@@ -12,16 +12,28 @@
   <canvas id="canvas" width="290" height="290"></canvas>
 
   <section>
-    <div class="score">
-      <div class="score__max">лучший результат</div>
-      <div class="score__now">результат</div>
+    <div>
+    <div class="box score-max">
+      <div class="cards">Лучший результат</div>
+      <div class="cards_score score__max"></div>
     </div>
+
+    <div class="box score">
+      <div class="cards">Результат</div>
+      <div class="cards_score score__now"></div>
+    </div>
+    
+    <div class="box speed_speed">
+      <div class="cards">Скорость</div>
+      <div class="cards_score speed">1000</div>
+    </div>
+  </div>
 
     <button type="button" class="super-button">НАЧАТЬ</button>
 
   </section>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 
 
